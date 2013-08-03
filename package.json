@@ -1,0 +1,23 @@
+{
+	"name" 			: "Custom Bootstrap",
+	"description" 	: "Custom Bootstrappable Base for future projects",
+	"version" 		: "0.0.1",
+	"dependencies" : {
+		"express" : "3.x",
+		"jade"	  : "*",
+		"mongoose": "*",
+		"connect" : "*",
+		"passport": "*",
+		"passport-facebook" : "*",
+		"passport-local"	: "*",
+		"socket.io"			: "*",
+		"aws-sdk"			: "*",
+		"s3policy"			: "*",
+		"cookie"			: "*",
+		"redis"				: "*",
+		"connect-redis"		: "*",
+		"session.socket.io"	: "*",
+		"uglify-js"			: "*",
+		"moment"			: "*"
+	}
+}
