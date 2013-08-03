@@ -27,6 +27,18 @@ mongoose.connect('mongodb://localhost/launchpoint'); //the database to connect t
 configuredModules['mongoose'] = true; //Flag it as enabled
 //-/MONGOOSE
 
+//MODELS
+//-- Require all the models under a given directory
+//-- Should only work with mongoose so it is only done if mongoose is used
+if (configuredModules['mongoose']) {
+	var models_path = __dirname + '/app/models'
+	filesystem.readdirSync(models_path).forEach(function (file) {
+		require(models_path+'/'+file)
+	})
+	configuredModules['mongoose'] = true;
+}
+//-/MODELS
+
 //PASSPORT
 //-- Passport.js is used for various user authentication methods. (It pretty much has everything)
 //-- This can only exist if models are being used.
@@ -40,7 +52,7 @@ if (configuredModules['mongoose']) {
 //REQUIRED - EXPRESS
 //-- Express JS framework for node. This app revolves around it for now.
 var app 	= express();
-var cookieParser = express.cookieParser('iron-goose')
+var cookieParser = express.cookieParser('launchpoint')
 var params = {
 	app 		: app,
 	cookieParser: cookieParser
@@ -56,7 +68,7 @@ configuredModules['express'] = true;
 
 //SOCKETS
 //-- Socket.io is used for realtime communication between the client and the server. Pretty cool if you know how to use it!
-var socket 			= require('socket'); //require the socket module
+var socket 			= require('socket.io'); //require the socket module
 var server 			= http.createServer(app); //Create the server
 var io 				= socket.listen(server); //Attach the socket.io listener to that server we jsut created
 if (configuredModules['login']) {
@@ -88,18 +100,6 @@ AWS.config.update({
 });
 configuredModules['aws'] = true;
 //-/AWS (AMAZON WEB SERVICES)
-
-//MODELS
-//-- Require all the models under a given directory
-//-- Should only work with mongoose so it is only done if mongoose is used
-if (configuredModules['mongoose']) {
-	var models_path = __dirname + '/app/models'
-	filesystem.readdirSync(models_path).forEach(function (file) {
-		require(models_path+'/'+file)
-	})
-	configuredModules['mongoose'] = true;
-}
-//-/MODELS
 
 //REQUIRED - ROUTER
 //-- This is where all the routes are declared.
