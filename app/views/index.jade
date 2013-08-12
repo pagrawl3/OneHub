@@ -1,6 +1,11 @@
 include ./includes/header
 body.home
 	h1 Hello World
-	a(href='/auth/facebook')
-		button.fb Register with facebook
+	//- a(href='/auth/facebook')
+	//- 	button.fb Register with facebook
+	br
+	input#movie(type="text", placeholder="Movie Name")
+	button.search Search
+	section.movie-container
+		ul.movies
 	include ./includes/footer
