@@ -21,6 +21,11 @@ module.exports = function(params) {
 		app.get ('/logout'					, users.logout)
 	}
 
+	sock.getNormal('test', function(data, socket) {
+		console.log('message on server received');
+		socket.emit('testSuccess', {success: 'yay!'});
+	}, io);
+
  	//__FINALLY IF THERE IS NO KNOWN URL INCL. '/' THEN GO TO HOME
  	app.get('/*', main.index);
 }

@@ -108,8 +108,10 @@ var routerParams = {
 };
 if (configuredModules['login'])
 	routerParams['passport'] = passport;
-if (configuredModules['socket'])
+if (configuredModules['socket']) {
 	routerParams['socket'] = socket;
+	routerParams['io'] = io;
+}
 if (configuredModules['login'])
 	routerParams['sessionSocket'] = sessionSocket;
 
