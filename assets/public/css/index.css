@@ -1,11 +1,11 @@
 * {
   font-family: "proxima-nova", sans-serif !important;
   -webkit-font-smoothing: antialiased;
-  -webkit-transition: 0.4s ease-out;
-  -moz-transition: 0.4s ease-out;
-  -ms-transition: 0.4s ease-out;
-  -o-transition: 0.4s ease-out;
-  transition: 0.4s ease-out;
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -ms-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
 }
 .logo-container {
   padding: 50px 0;
@@ -23,8 +23,67 @@
   font-weight: 300;
   padding: 5px;
 }
+.movie-container {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+}
+.movie-container .overlay {
+  position: absolute;
+  left: 50%;
+  margin-left: -640px;
+  top: 600px;
+  height: 600px;
+  width: 1280px;
+  box-shadow: inset 0px -10px 8px -5px rgba(1, 1, 1, 0.2);
+  z-index: 300;
+  background-color: rgba(1, 1, 1, 0.4);
+}
+.movie-container .overlay header.title {
+  font-family: "bebas-neue", sans-serif !important;
+  padding: 50px;
+  padding-bottom: 0;
+  font-size: 3em;
+  color: #FFF;
+}
+.movie-container .overlay header.title hr {
+  width: 50%;
+  text-align: left;
+  margin-left: 0;
+  margin-top: -5px;
+}
+.movie-container .overlay article.description {
+  padding-left: 50px;
+  width: 50%;
+  color: #FFF;
+  font-size: 1.5em;
+  text-align: justify;
+}
+.movie-container .overlay img.poster {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin: 30px;
+  margin-top: -225px;
+}
+section.movie-description {
+  background-color: #ddd;
+  overflow: hidden;
+  position: relative;
+  top: 600px;
+  height: 600px;
+  width: 1280px;
+  margin: 0 auto;
+}
+section.movie-description img {
+  opacity: 0;
+}
+section.movie-description canvas {
+  position: absolute;
+  opacity: 0;
+}
 .alt-color {
-  background-color: #fafafa;
+  background-color: #f5f5f5;
 }
 .alt-color .header {
   padding: 30px;
@@ -38,16 +97,12 @@
   font-style: italic;
   color: #aaa;
 }
-.alt-color .data {
-  max-width: 2000px;
-}
 .alt-color .data .wrapper {
   overflow-x: scroll;
 }
 .alt-color .data ul.movies {
   display: inline-block;
   width: auto;
-  padding: 0;
   list-style: none;
   min-height: 330px;
   white-space: nowrap;
@@ -57,6 +112,7 @@
   margin: 15px;
   opacity: 0;
   margin-top: -10px;
+  cursor: pointer;
 }
 .alt-color .data ul.movies li img {
   border-radius: 5px;

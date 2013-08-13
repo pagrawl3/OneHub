@@ -1,11 +1,11 @@
 * {
 	font-family: "proxima-nova", sans-serif !important;
 	-webkit-font-smoothing: antialiased;
-	-webkit-transition: 0.4s ease-out;
-	-moz-transition: 0.4s ease-out;
-	-ms-transition: 0.4s ease-out;
-	-o-transition: 0.4s ease-out;
-	transition: 0.4s ease-out;
+	-webkit-transition: 0.3s ease-out;
+	-moz-transition: 0.3s ease-out;
+	-ms-transition: 0.3s ease-out;
+	-o-transition: 0.3s ease-out;
+	transition: 0.3s ease-out;
 }
 
 .logo-container {
@@ -25,8 +25,70 @@
 	}
 }
 
+.movie-container {
+	position: relative;
+	height: 0;
+	overflow: hidden;
+	.overlay {
+		position: absolute;
+		left: 50%;
+		margin-left: -640px;
+		top: 600px;
+		height: 600px;
+		width: 1280px;
+		box-shadow: inset 0px -10px 8px -5px rgba(1,1,1,0.2);
+		z-index: 300;
+		background-color: rgba(1,1,1,0.4);
+		header.title {
+			font-family: "bebas-neue", sans-serif !important;
+			padding: 50px;
+			padding-bottom: 0;
+			font-size: 3em;
+			color: #FFF;
+			hr {
+				width: 50%;
+				text-align: left;
+				margin-left: 0;
+				margin-top: -5px;
+			}
+		}
+		article.description {
+			padding-left: 50px;
+			width: 50%;
+			color: #FFF;
+			font-size: 1.5em;
+			text-align: justify;
+		}
+		img.poster {
+			position: absolute;
+			top: 50%;
+			right: 0;
+			margin: 30px;
+			margin-top: -225px;
+		}
+	}
+}
+
+section.movie-description {
+	background-color: #ddd;
+	overflow: hidden;
+	position: relative;
+	top: 600px;
+	height: 600px;
+	width: 1280px;
+	margin: 0 auto;
+	img {
+		opacity: 0;
+	}
+	canvas {
+		position: absolute;
+		opacity: 0;
+	}
+
+}
+
 .alt-color {
-	background-color: #fafafa;
+	background-color: #f5f5f5;
 	// height: 300px;
 	.header {
 		padding: 30px;
@@ -42,14 +104,14 @@
 		}
 	}
 	.data {
-		max-width: 2000px;
+		// max-width: 2000px;
 		.wrapper {
 			overflow-x: scroll;
 		}
 		ul.movies {
 			display: inline-block;
 			width: auto;
-			padding: 0;
+			// padding: 0;
 			list-style: none;
 			min-height: 330px;
 			// text-align: center;
@@ -59,6 +121,7 @@
 				margin: 15px;
 				opacity: 0;
 				margin-top: -10px;
+				cursor: pointer;
 				img {
 					border-radius: 5px;
 				}

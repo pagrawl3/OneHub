@@ -5,7 +5,7 @@ var apiURL = 'http://api.themoviedb.org',
 var socket = io.connect('/');
 
 function click(handler, callback) {
-	$('body').on('click', $(handler), callback);
+	$('body').on('click', handler, callback);
 }
 
 function initialize() {
@@ -60,15 +60,29 @@ function getPopular(page, callback) {
 }
 
 function createMovieHTML(movie) {
-	var html = 	'<li class="movie">'+
+	var html = 	'<li class="movie" data-id="'+movie.id+'">'+
 					'<img class="poster" src="'+apiSettings.images.base_url+'w154/'+movie.poster_path+'" width="154px" height="231px" onLoad="imageIn(this)">'+
 					'<section class="metadata">'+
 						'<span class="title">'	+ movie.title + '</span><br>'+
 						// '<span class="genres">'	+ movie.title + '</span><br>'+
 						'<span class="rating">Rating: <b>'	+ movie.vote_average + '</b></span>'+
 					'</section>'+
-				'</li>'
+				'</li>';
 	return html;
+}
+
+function createMovieDescripHTML(movie) {
+	var html = '<header class="title">'+
+					movie.title +
+					'<hr>' +
+				'</header>' +
+				'<article class="description">' +
+					movie.overview +
+				'</article>' +
+				'<img src="' +
+					apiSettings.images.base_url+'w342/'+movie.poster_path +
+				'" width="300px" class="poster">';
+	return html
 }
 
 function imageIn(img) {
@@ -79,10 +93,14 @@ function imageIn(img) {
 initialize();
 $(document).ready(function(){
 
+
+	var movieData = {};
+
+
 	getPopular(1, function(data) {
 		data.results.slice(0,20).forEach(function(movie){
 				getMovieFromId(movie.id, function(data) {
-					// console.log(data);
+					movieData[movie.id] = data
 				});
 				if (movie.poster_path)
 					$('ul.movies').append(createMovieHTML(movie));
@@ -93,19 +111,20 @@ $(document).ready(function(){
 	var locked = false;
 	var page = 2;
 	$('.wrapper').scroll(function() {
-		var percentageScrolled = $('.wrapper').scrollLeft()/$('ul.movies').width() * 100 * page
-		if (percentageScrolled > 50 && !locked) {
+		var percentageScrolled = $('.wrapper').scrollLeft()/$('ul.movies').width() * 100
+		if (percentageScrolled > 40 && !locked) {
 			locked = true;
 			console.log('loading more');
 			getPopular(page++, function(data) {
 				data.results.slice(0,20).forEach(function(movie){
 						getMovieFromId(movie.id, function(data) {
+							movieData[movie.id] = data
 						});
 						if (movie.poster_path) {
 							$('ul.movies').append(createMovieHTML(movie));
-							locked = false;
 						}
 				});
+				locked = false;
 			});
 		}
 	});
@@ -134,5 +153,34 @@ $(document).ready(function(){
 			});
 		});
 
+	})
+
+	click("li.movie", function(e){
+		var movie = movieData[$(this).attr('data-id')]
+		console.log(movie);
+		$('.movie-container').css('height', '600px');
+		$('section.movie-description').css('top', '600px');
+		$('.movie-container .overlay').css('top', '600px');
+		// $('section.movie-description canvas').css('opacity', '0');
+		window.setTimeout(function(){
+			$('.movie-container .overlay').html(createMovieDescripHTML(movie));
+			$('section.movie-description').html('');
+			var img = new Image();
+			img.onload = function() {
+				Pixastic.process(img, "blurfast", {amount:5});
+				window.setTimeout(function(){
+					$('section.movie-description img').css('opacity', '1');
+					$('section.movie-description canvas').css('opacity', '1');
+					$('section.movie-description').css('top', '0');
+					$('.overlay').css('top', '0');
+				}, 200)
+			}
+			$('section.movie-description').append(img);
+			img.src = apiSettings.images.base_url+'w1280/'+movie.backdrop_path;
+		}, 200)
+
+
+		// $('section.movie-description').css('background', 'url('+apiSettings.images.base_url+'w1280/'+movie.backdrop_path+') 00% 00%');
+		// $('section.movie-description').css('backgroundSize', 'auto');
 	})
 });
