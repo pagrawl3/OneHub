@@ -8,7 +8,7 @@
   transition: 0.4s ease-out;
 }
 .logo-container {
-  padding: 50px;
+  padding: 50px 0;
   text-align: center;
 }
 .logo-container h1.logo {
@@ -26,48 +26,59 @@
 .alt-color {
   background-color: #fafafa;
 }
-.alt-color .header.container {
-  padding: 30px 0;
+.alt-color .header {
+  padding: 30px;
 }
-.alt-color .header.container .section-title {
+.alt-color .header .section-title {
   font-size: 1.5em;
   font-weight: 500;
 }
-.alt-color .header.container .section-subtitle {
+.alt-color .header .section-subtitle {
   font-size: 1.2em;
   font-style: italic;
   color: #aaa;
 }
-.alt-color .data.container ul.movies {
+.alt-color .data {
+  max-width: 2000px;
+}
+.alt-color .data .wrapper {
+  overflow-x: scroll;
+}
+.alt-color .data ul.movies {
+  display: inline-block;
+  width: auto;
   padding: 0;
   list-style: none;
   min-height: 330px;
+  white-space: nowrap;
 }
-.alt-color .data.container ul.movies li {
+.alt-color .data ul.movies li {
   display: inline-block;
-  margin: 15px 0;
+  margin: 15px;
   opacity: 0;
+  margin-top: -10px;
 }
-.alt-color .data.container ul.movies li img {
+.alt-color .data ul.movies li img {
   border-radius: 5px;
 }
-.alt-color .data.container ul.movies li .metadata {
+.alt-color .data ul.movies li .metadata {
+  width: 154px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   padding-top: 10px;
 }
-.alt-color .data.container ul.movies li .metadata span {
+.alt-color .data ul.movies li .metadata span {
   text-align: left;
   padding-right: 5px;
 }
-.alt-color .data.container ul.movies li .metadata span.title {
+.alt-color .data ul.movies li .metadata span.title {
   font-weight: 600;
   font-size: 1.2em;
 }
-.alt-color .data.container ul.movies li .metadata span.genres {
+.alt-color .data ul.movies li .metadata span.genres {
   color: #aaa;
 }
-.alt-color .data.container ul.movies li .metadata span.rating {
+.alt-color .data ul.movies li .metadata span.rating {
   color: #aaa;
 }

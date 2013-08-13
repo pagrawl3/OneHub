@@ -17,7 +17,7 @@ function initialize() {
 			api_key : apiKey
 		},
 		success : function(data) {
-			console.log(data);
+			// console.log(data);
 			apiSettings = data;
 		}
 	})
@@ -35,6 +35,18 @@ function getMovie(movie, callback) {
 	})
 }
 
+function getMovieFromId(id, callback) {
+	$.ajax({
+		url 	: apiURL+'/3/movie/'+id,
+		data	: {
+			api_key : apiKey,
+			append_to_response : "trailers, genres"
+		},
+		success : callback
+	})
+}
+
+
 function getPopular(page, callback) {
 	$.ajax({
 		url 	: apiURL+'/3/movie/popular',
@@ -48,7 +60,7 @@ function getPopular(page, callback) {
 }
 
 function createMovieHTML(movie) {
-	var html = 	'<li class="movie col-lg-2">'+
+	var html = 	'<li class="movie">'+
 					'<img class="poster" src="'+apiSettings.images.base_url+'w154/'+movie.poster_path+'" width="154px" height="231px" onLoad="imageIn(this)">'+
 					'<section class="metadata">'+
 						'<span class="title">'	+ movie.title + '</span><br>'+
@@ -61,18 +73,43 @@ function createMovieHTML(movie) {
 
 function imageIn(img) {
 	$(img).parent().css('opacity', 1);
+	$(img).parent().css('marginTop', 0);
 }
 
 initialize();
 $(document).ready(function(){
 
 	getPopular(1, function(data) {
-		data.results.slice(0,6).forEach(function(movie){
-				console.log(movie);
+		data.results.slice(0,20).forEach(function(movie){
+				getMovieFromId(movie.id, function(data) {
+					// console.log(data);
+				});
 				if (movie.poster_path)
 					$('ul.movies').append(createMovieHTML(movie));
 		});
 	});
+
+	var lastScrollLeft = 0;
+	var locked = false;
+	var page = 2;
+	$('.wrapper').scroll(function() {
+		var percentageScrolled = $('.wrapper').scrollLeft()/$('ul.movies').width() * 100 * page
+		if (percentageScrolled > 50 && !locked) {
+			locked = true;
+			console.log('loading more');
+			getPopular(page++, function(data) {
+				data.results.slice(0,20).forEach(function(movie){
+						getMovieFromId(movie.id, function(data) {
+						});
+						if (movie.poster_path) {
+							$('ul.movies').append(createMovieHTML(movie));
+							locked = false;
+						}
+				});
+			});
+		}
+	});
+
 
 	//Establish a socket conenction with the server for future stuff
 	socket.get = function (channel, data, callback) {
