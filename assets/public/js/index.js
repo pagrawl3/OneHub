@@ -24,7 +24,7 @@ function initialize() {
 }
 
 function getMovie(movie, callback) {
-	//Get MovieDB configurations
+	//Get MovieDB movies for the search term (movie)
 	$.ajax({
 		url 	: apiURL+'/3/search/movie',
 		data	: {
@@ -35,16 +35,44 @@ function getMovie(movie, callback) {
 	})
 }
 
+function getPopular(page, callback) {
+	$.ajax({
+		url 	: apiURL+'/3/movie/popular',
+		data	: {
+			api_key 			: apiKey,
+			page 				: page,
+			append_to_response	: 'trailers'
+		},
+		success : callback
+	})
+}
+
 function createMovieHTML(movie) {
-	var html = 	'<li class="movie">'+
-				'<img src="'+apiSettings.images.base_url+'w500/'+movie.poster_path+'">'+
-				'<h1>'+ movie.title + '</h1>'
+	var html = 	'<li class="movie col-lg-2">'+
+					'<img class="poster" src="'+apiSettings.images.base_url+'w154/'+movie.poster_path+'" width="154px" height="231px" onLoad="imageIn(this)">'+
+					'<section class="metadata">'+
+						'<span class="title">'	+ movie.title + '</span><br>'+
+						// '<span class="genres">'	+ movie.title + '</span><br>'+
+						'<span class="rating">Rating: <b>'	+ movie.vote_average + '</b></span>'+
+					'</section>'+
+				'</li>'
 	return html;
 }
 
+function imageIn(img) {
+	$(img).parent().css('opacity', 1);
+}
+
+initialize();
 $(document).ready(function(){
 
-	initialize();
+	getPopular(1, function(data) {
+		data.results.slice(0,6).forEach(function(movie){
+				console.log(movie);
+				if (movie.poster_path)
+					$('ul.movies').append(createMovieHTML(movie));
+		});
+	});
 
 	//Establish a socket conenction with the server for future stuff
 	socket.get = function (channel, data, callback) {

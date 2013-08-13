@@ -1,11 +1,26 @@
 include ./includes/header
 body.home
-	h1 Hello World
+	.logo-container
+		h1.logo OneHub
+		h3.subtitle Something cool about movies
 	//- a(href='/auth/facebook')
 	//- 	button.fb Register with facebook
+	section.alt-color.row
+		.header.container
+			.section-title Trendin'
+			.section-subtitle Movies that a lot of people wanna see. Do you?
+		.data.container
+			ul.movies
+				//- li.movie.col-lg-2
+				//- 	img.poster(src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w154/cVOGNAXzMLbRGchMHh6ysH9Hna2.jpg")
+				//- 	section.metadata
+				//- 		span.title The Great Gatsby
+				//- 		span.genres Action, Suspense, Fantasy
+				//- 		span.rating Rating: <b>8.1</b>
+
 	br
 	input#movie(type="text", placeholder="Movie Name")
 	button.search Search
-	section.movie-container
-		ul.movies
+	//- section.movie-container
+	//- 	ul.movies
 	include ./includes/footer
