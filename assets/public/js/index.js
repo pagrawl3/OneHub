@@ -79,6 +79,12 @@ function createMovieDescripHTML(movie) {
 				'<article class="description">' +
 					movie.overview +
 				'</article>' +
+				'<article class="trailer">'+
+					'<h3 class="title"> TRAILER </h3>'+
+					'<iframe id="player" type="text/html" width="480" height="270" src="http://www.youtube.com/embed/'+
+						movie.trailers.youtube[0].source +
+					'?HD=1&rel=0&showinfo=0&controls=2&enablejsapi=1" allowfullscreen frameborder="0" class="youtube-player"></iframe>'+
+				'</article>'+
 				'<img src="' +
 					apiSettings.images.base_url+'w342/'+movie.poster_path +
 				'" width="300px" class="poster">';
@@ -87,11 +93,28 @@ function createMovieDescripHTML(movie) {
 
 function imageIn(img) {
 	$(img).parent().css('opacity', 1);
-	$(img).parent().css('marginTop', 0);
+	// $(img).parent().css('marginTop', 0);
 }
 
 initialize();
 $(document).ready(function(){
+	var tag = document.createElement('script');
+	tag.src = "http://www.youtube.com/player_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+	var player;
+	function onYouTubeIframeAPIReady() {
+	  player = new YT.Player('player', {
+	    events: {
+	      'onStateChange': onPlayerStateChange
+	    }
+	  });
+	}
+
+	function onPlayerStateChange() {
+	  console.log("WROKS!")
+	}
 
 
 	var movieData = {};
@@ -167,7 +190,7 @@ $(document).ready(function(){
 			$('section.movie-description').html('');
 			var img = new Image();
 			img.onload = function() {
-				Pixastic.process(img, "blurfast", {amount:5});
+				Pixastic.process(img, "blurfast", {amount:0.3});
 				window.setTimeout(function(){
 					$('section.movie-description img').css('opacity', '1');
 					$('section.movie-description canvas').css('opacity', '1');
@@ -177,7 +200,7 @@ $(document).ready(function(){
 			}
 			$('section.movie-description').append(img);
 			img.src = apiSettings.images.base_url+'w1280/'+movie.backdrop_path;
-		}, 200)
+		}, 400)
 
 
 		// $('section.movie-description').css('background', 'url('+apiSettings.images.base_url+'w1280/'+movie.backdrop_path+') 00% 00%');

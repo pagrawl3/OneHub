@@ -30,34 +30,48 @@
 }
 .movie-container .overlay {
   position: absolute;
-  left: 50%;
-  margin-left: -640px;
   top: 600px;
   height: 600px;
-  width: 1280px;
+  width: 100%;
   box-shadow: inset 0px -10px 8px -5px rgba(1, 1, 1, 0.2);
   z-index: 300;
-  background-color: rgba(1, 1, 1, 0.4);
+  background-color: rgba(1, 1, 1, 0.7);
 }
 .movie-container .overlay header.title {
   font-family: "bebas-neue", sans-serif !important;
   padding: 50px;
   padding-bottom: 0;
-  font-size: 3em;
+  font-size: 2.5em;
   color: #FFF;
 }
 .movie-container .overlay header.title hr {
-  width: 50%;
+  width: 70%;
   text-align: left;
   margin-left: 0;
   margin-top: -5px;
 }
 .movie-container .overlay article.description {
   padding-left: 50px;
-  width: 50%;
+  width: 70%;
   color: #FFF;
-  font-size: 1.5em;
+  font-size: 1.2em;
   text-align: justify;
+  height: 16%;
+  overflow: scroll;
+}
+.movie-container .overlay article.trailer {
+  margin-top: 30px;
+  margin-left: 50px;
+  width: 480px;
+}
+.movie-container .overlay article.trailer h3.title {
+  margin-bottom: 5px;
+  font-family: "bebas-neue", sans-serif !important;
+  color: #FFF;
+}
+.movie-container .overlay article.trailer iframe {
+  padding: 10px;
+  border: 3px solid #FFF;
 }
 .movie-container .overlay img.poster {
   position: absolute;
@@ -72,7 +86,6 @@ section.movie-description {
   position: relative;
   top: 600px;
   height: 600px;
-  width: 1280px;
   margin: 0 auto;
 }
 section.movie-description img {
@@ -81,6 +94,11 @@ section.movie-description img {
 section.movie-description canvas {
   position: absolute;
   opacity: 0;
+  -webkit-transform: scale(2, 2);
+  -moz-transform: scale(2, 2);
+  -ms-transform: scale(2, 2);
+  -o-transform: scale(2, 2);
+  transform: scale(2, 2);
 }
 .alt-color {
   background-color: #f5f5f5;
@@ -111,7 +129,6 @@ section.movie-description canvas {
   display: inline-block;
   margin: 15px;
   opacity: 0;
-  margin-top: -10px;
   cursor: pointer;
 }
 .alt-color .data ul.movies li img {
